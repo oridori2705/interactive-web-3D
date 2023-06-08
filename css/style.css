@@ -1,5 +1,5 @@
 body {
-    height: 500vw;
+    height: 500vw;/*스크롤이 되기위해서 높이를 강제로 높여줘야한다*/
     font-family: 'Apple SD Gothic Neo', 'Roboto', 'Noto Sans KR', NanumGothic, 'Malgun Gothic', sans-serif;
     -webkit-overflow-scrolling: touch;
     color: #555;
