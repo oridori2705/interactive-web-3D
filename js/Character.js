@@ -47,18 +47,21 @@ Character.prototype = {
         const self = this;
 
         /*스크롤 이벤트 */
+        // 1.스크롤이 될 때 처음에 달리기를 시작->초기값 scrollState=false로 인해서
+        // ->self.mainElem.classList.add('running')실행
+        // 2.setTimeout으로 달리기 시작함수 중복실행 제거->setTimeout은 숫자로된번호를 반환함
+        //-> if (!self.scrollState) -> 그래서 여기에 못들어가짐
+        // 3.setTimeout함수는 스크롤 될 때마다 clearTimeout으로 제거됨->즉 실행되자마자 반환된 번호들로인해 취소됨
+        // 4.하지만 스크롤을 멈추면 마지막에 실행됐었던 setTimeout이 0.5초뒤에 비로소 실행되어서 초기상태도 만들어줌->멈춤
         window.addEventListener('scroll', function () {
-            //8.스크롤 할때마다 0.5초가 되기전에 setTimeout에서 반환되는 번호를 clear해주는 것이다.
-            //9.즉 스크롤되는동안 setTimeout의 함수는 실행되지 못한다. ->setTimeout은 실행되고 바로 취소됨
-            //10.스크롤이 멈춰야 clear을 수행안하니까 setTimeout안의 함수가 비로소 실행되는것이다.->0.5초 후 달리기 멈춤
+            
             clearTimeout(self.scrollState);
 
             /*스크롤이 일어날 떄 그냥 classList를 실행하면 mainElem을 찾을 수 없다고 뜬다 */
             /*현재 this.mainElem ~ 이런식으로하면 스크롤이 일어날때 실행해줄 인스턴스 객체를 가리키지 못함
              여기안에서 this를 사용하면 window전역객체를 가리키게됨 */
 
-
-            //처음 달리기를 시작할때는 false니까 이 함수가 한번 실행됨
+            
             if (!self.scrollState) { //1.scrollState가 false면
                 self.mainElem.classList.add('running');//2.running추가해서 캐릭터가 달림
             }
@@ -66,10 +69,7 @@ Character.prototype = {
             self.scrollState = setTimeout(function () {
                 self.scrollState = false;
                 self.mainElem.classList.remove('running');
-            }, 500);//4.setTimeout은 숫자를(1,2,3..) 리턴한다.->시간관계없이 계속 값이 리턴됨
-            //->5. 스크롤이 실행될때마다 숫자값이 리턴되니까 위의 add(running)은 한번만 실행이된다(false가 아니게되니까) 
-            //->6.즉 위애서 add(running) 중복실행 방지
-            //7.그리고 스크롤이 멈추면 0.5초뒤에 false로 다시 만들고, running을 없앤다.->초기상태로 다시변환
+            }, 500);
             
         });
     },
