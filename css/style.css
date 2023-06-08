@@ -116,16 +116,19 @@ body {
     to { transform: rotateX(-10deg); }/*x축기준으로 rotate함*/
 }
 
-
+/*running클래스가 붙으면 실행할 애니메이션*/
 @keyframes ani-running-leg {
+    /*다리는 x축을 기준으로 움직인다. rotateX*/
+    /*60도 범위안에서 움직일것이다.*/
     from {
-        transform: rotateX(-30deg);
+        transform: rotateX(-30deg); 
     }
     to {
         transform: rotateX(30deg);
     }
 }
 @keyframes ani-running-arm {
+    /*팔은 y축을 기준을 움직인다. rotateY*/
     from {
         transform: rotateY(30deg);
     }
@@ -242,11 +245,16 @@ data-direction에 따라서 어디쪽을 바라보고 있는지 CSS로 미리정
 .character-leg-left .face-back { background-image: url('../images/ilbuni_leg_0.png'); }
 
 
+/*캐릭터에 running클래스가 붙으면 anirunning 애니메이션이 실행됨*/
+/*linear : 등속도 (속도가 일정함)*/
 .character.running .character-leg-right { animation: ani-running-leg 0.2s alternate infinite linear; }
+/*alternate-reverse를 통해서 좌우 팔의 흔들리는게 달라짐*/
 .character.running .character-leg-left { animation: ani-running-leg 0.2s alternate-reverse infinite linear; }
+/*팔은 중심축위치가 애초에 정반대이기때문에 reverse할필요가 없음*/
 .character.running .character-arm { animation: ani-running-arm 0.2s alternate infinite linear; }
 
-/*라면걸9다른캐릭터)*/
+
+/*라면걸(다른캐릭터)*/
 body[data-char='ragirl'] .character {
     width: 12vw;
     height: calc(12vw * 1.4135);
