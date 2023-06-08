@@ -73,9 +73,11 @@ body {
     /*즉 500vw(가운데)를 기준으로 회전했으면 500vw만큼 왼쪽으로 와야 왼쪽벽이된다.
     left대신 translateZ(-500vw)로도 가능하다.*/
     /*left:-500vw*/
+    background : #f8f8f8;
 }
 /*오른쪽 벽*/
 .wall-right{
+    background : #f8f8f8;
     width: 1000vw;
     /* left:-500vw; */
      /*오른쪽벽은 오른쪽으로 위치해야하므로 z축을 100vw만큼(컨텐츠벽 크기)변경해준다.*/
@@ -84,3 +86,8 @@ body {
     transform: rotateY(90deg) translateZ(-400vw);
    
 }
+/*house의 translateZ(-490vw)을 기준으로 적절히 컨텐츠 벽을 배치한다. */
+.wall-front-a{ transform: translateZ(300vw);}
+.wall-front-b{ transform: translateZ(50vw);}
+.wall-front-c{ transform: translateZ(-200vw);}
+.wall-front-d{ transform: translateZ(-500vw);}
