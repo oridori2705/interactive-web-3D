@@ -29,8 +29,6 @@
         //rotateX = x축을 기준으로 회전시킬때는 마우스 y의값에 영향을 받음
         //rotateY = y축을 기준으로 회전시킬때는 마우스 x의 값에 영향을 받음
         stageElem.style.transform=`rotateX(${y}deg) rotateY(${x}deg)`; //캐릭터도 있으면 회전시켜줘야하므로 stage 컨테이너를 rotate해야함
-        console.log(x,y)
     });
-
 
 })();
