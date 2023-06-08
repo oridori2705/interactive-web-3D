@@ -1,0 +1,59 @@
+body {
+    height: 500vw;
+    font-family: 'Apple SD Gothic Neo', 'Roboto', 'Noto Sans KR', NanumGothic, 'Malgun Gothic', sans-serif;
+    -webkit-overflow-scrolling: touch;
+    color: #555;
+    background: #fff000;
+}
+/*전체 컨테이너*/
+.world{
+    perspective: 1000px;/* 3차원공간으로 만들어야됨 */
+    /*현재 스크롤을 내리면 공간이 앞뒤로 이동한다.
+    스크롤을 올리거나 내리더라도 world부분은 눈앞에 남아있어야한다.*/
+    position: fixed;
+    left : 0;
+    top : 0;
+    width: 100vw;
+    height: 100vh;
+}
+/* 벽과 캐릭터들을 감싸는 컨테이너 */
+.stage{
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100vw;
+    height: 100vh;
+    /*실제 캐릭터들과 벽들이 3D공간에 있어야하는데 world에 perspective를 주었기 때문에 stage 컨테이너가 이를 막게된다. 
+    그래서 transform-style:peserve-3d 속성을 줘서 캐릭터와 벽이 있는 컨테이너에 3D공간이 잘 전달되게한다.*/
+    transform-style:preserve-3d; 
+}
+/*벽들을 감싸는 컨테이너*/
+/*꽉찬 화면에서 z축으로 움직임을 줘서 앞뒤로 이동하는 것처럼 보이게한다.*/
+.house{
+    transform-style: preserve-3d;
+    width: 100vw;
+    height: 100vh;
+}
+/*벽이 총 6개있다.(컨텐츠 벽4개 오른쪽 왼쪽벽 2개*/
+/*벽을 absoulte로 모두 겹친상태에서 왼쪽 오른쪽벽은 가로폭을 넓힌다. 그리고 y축을 기준으로 rotate를한다.*/
+/*각 컨텐츠 벽들은 z값이 각각 다른 것*/
+.wall{
+    /*모든 벽들이 겹치게되고 화면을 꽉채우게 된다.*/
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255,255,255,0.8);
+}
+/*컨텐츠벽의 속성*/
+.wall-content{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+/*컨텐츠벽의 텍스트의 속성*/
+.wall-title{
+    font-size: 5rem;
+}
