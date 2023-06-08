@@ -99,7 +99,7 @@ body {
     position: fixed;
     left:0;
     right:0;
-    z-index: 100;
+    z-index: 100;/*다른 요소에 안덮이게하기위해*/
     width:100vw;
     height: 5px;
     background: #555;
@@ -108,4 +108,236 @@ body {
 .progress-bar {
     height: 100%;
     background: skyblue;
+}
+
+/* animation */
+/*머리가 가만히 있어도 까딱까닥하는 애니메이션*/
+@keyframes ani-head {
+    to { transform: rotateX(-10deg); }/*x축기준으로 rotate함*/
+}
+
+
+@keyframes ani-running-leg {
+    from {
+        transform: rotateX(-30deg);
+    }
+    to {
+        transform: rotateX(30deg);
+    }
+}
+@keyframes ani-running-arm {
+    from {
+        transform: rotateY(30deg);
+    }
+    to {
+        transform: rotateY(-30deg);
+    }
+}
+
+/* character */
+/*최상위 캐릭터의 공간부분*/
+.character {
+    position: absolute;
+    left: 12%;
+    bottom: 5%; /*위치 초기화*/
+    width: 10vw;
+    height: 15.58vw;/*그림의 크기는 10 : 15.58 비율임 vw한이유는 창크기가 커지면 같이커지도록->vh하면안됨*/
+    transform-style: preserve-3d; /*상위에서 적용된 3D효과를 아래로 전달*/
+}
+/*캐릭터의 방향을 정함
+data-direction에 따라서 어디쪽을 바라보고 있는지 CSS로 미리정해놓음
+최상위 character의 속성을 바꿔줌 ->결정은 JS에서 해줌*/
+.character[data-direction='forward'] { transform: rotateY(180deg); }
+.character[data-direction='backward'] { transform: rotateY(0deg); }
+.character[data-direction='left'] { transform: rotateY(-90deg); }
+.character[data-direction='right'] { transform: rotateY(90deg); }
+
+/*각 부위별 컨테이너(앞면과 뒷면을 감싸줄)*/
+.character-face-con {
+    position: absolute;/*absolute인 이유는 부위별로 각각 다른위치에 위치해야하므로*/
+    transform-style: preserve-3d;
+    transition: 1s;/*크기의 변화가있을때 부드럽게*/
+}
+/*실제 캐릭터 앞면과 뒷면 부분들*/
+.character-face {
+    position: absolute;/*앞면과 뒷면을 겹치기위해*/
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+    -webkit-backface-visibility: hidden;/*뒤집혔을때 현재 면이 안보이게하기위해*/
+    backface-visibility: hidden; /*webkit안쓰면 이 속성을 쓰게끔*/
+}
+/*뒷면에 해당하는 부분*/
+.character-face.face-back {
+    transform: rotateY(180deg);/*미리 뒤집어놓음*/
+}
+/*캐릭터 머리부분 세팅*/
+.character-head {
+    /*calc함수 :속성의 값을 계산을 해주는 함수입니다. + - * / 사칙연산을 지원 -> 직관성을 위해 calc함수사용(값을넣는게아닌 식을 넣어서 보기 편함)*/
+    left: calc(42 / 856 * 100%);/*머리 이미지와 전체컨테이너의 떨어뜨리려는 길이/ 전체컨테이너(character)길이 * 100(퍼센트화)*/
+    top: 0; /*컨테이너에서 머리위치*/
+    z-index: 60;
+    width: calc(770 / 856 * 100%); /*머리 이미지 가로길이/전체컨테이너 길이*/
+    height: calc(648 / 1334 * 100%);/*머리 이미지 세로길이/전체컨테이너 길이*/
+    transform-origin: center bottom; /*목을 기준으로 머리가 까딱까딱하기위해*/
+    animation: ani-head 0.6s infinite alternate cubic-bezier(0.46, 0.18, 0.66, 0.93);/*머리를 계속 까딱까딱함*/
+}
+/*각 부위별로 이미지를 넣어줌*/
+.character-head-face.face-front { background-image: url('../images/ilbuni_head_front.png'); }
+.character-head-face.face-back { background-image: url('../images/ilbuni_head_back.png'); }
+/*몸총부분*/
+.character-torso {
+    left: calc(208 / 856 * 100%);
+    top: calc(647 / 1334 * 100%);
+    z-index: 50;
+    width: calc(428 / 856 * 100%);
+    height: calc(385 / 1334 * 100%);
+    transform-origin: center center;
+}
+.character-torso-face.face-front { background-image: url('../images/ilbuni_body_front.png'); }
+.character-torso-face.face-back { background-image: url('../images/ilbuni_body_back.png'); }
+/*오른팔*/
+.character-arm-right {
+    left: 0;
+    top: calc(648 / 1334 * 100%);
+    width: calc(244 / 856 * 100%);
+    height: calc(307 / 1334 * 100%);
+    transform-origin: right top;
+}
+.character-arm-right .face-front { background-image: url('../images/ilbuni_arm_0.png'); }
+.character-arm-right .face-back { background-image: url('../images/ilbuni_arm_1.png'); }
+/*왼팔*/
+.character-arm-left {
+    left: calc(600 / 856 * 100%);
+    top: calc(648 / 1334 * 100%);
+    width: calc(244 / 856 * 100%);
+    height: calc(307 / 1334 * 100%);
+    transform-origin: left top;
+}
+.character-arm-left .face-front { background-image: url('../images/ilbuni_arm_1.png'); }
+.character-arm-left .face-back { background-image: url('../images/ilbuni_arm_0.png'); }
+/* 왼다리 */
+.character-leg-right {
+    left: calc(200 / 856 * 100%);
+    top: calc(1031 / 1334 * 100%);
+    width: calc(230 /  856 * 100%);
+    height: calc(300 / 1334 * 100%);
+    transform-origin: center top;
+}
+.character-leg-right .face-front { background-image: url('../images/ilbuni_leg_0.png'); }
+.character-leg-right .face-back { background-image: url('../images/ilbuni_leg_1.png'); }
+/*오른다리*/
+.character-leg-left {
+    left: calc(414 / 856 * 100%);
+    top: calc(1031 / 1334 * 100%);
+    width: calc(230 /  856 * 100%);
+    height: calc(300 / 1334 * 100%);
+    transform-origin: center top;
+}
+.character-leg-left .face-front { background-image: url('../images/ilbuni_leg_1.png'); }
+.character-leg-left .face-back { background-image: url('../images/ilbuni_leg_0.png'); }
+
+
+.character.running .character-leg-right { animation: ani-running-leg 0.2s alternate infinite linear; }
+.character.running .character-leg-left { animation: ani-running-leg 0.2s alternate-reverse infinite linear; }
+.character.running .character-arm { animation: ani-running-arm 0.2s alternate infinite linear; }
+
+/*라면걸9다른캐릭터)*/
+body[data-char='ragirl'] .character {
+    width: 12vw;
+    height: calc(12vw * 1.4135);
+}
+body[data-char='ragirl'] .character-head {
+    left: calc(23 / 948 * 100%);
+    width: calc(920 / 948 * 100%);
+    height: calc(750 / 1340 * 100%);
+}
+body[data-char='ragirl'] .character-head-face.face-front { background-image: url('../images/ragirl_head_front.png'); }
+body[data-char='ragirl'] .character-head-face.face-back { background-image: url('../images/ragirl_head_back.png'); }
+body[data-char='ragirl'] .character-torso {
+    left: calc(273 / 948 * 100%);
+    top: calc(630 / 1340 * 100%);
+    z-index: 50;
+    width: calc(402 / 948 * 100%);
+    height: calc(444 / 1340 * 100%);
+    transform-origin: center center;
+}
+body[data-char='ragirl'] .character-torso-face.face-front { background-image: url('../images/ragirl_body_front.png'); }
+body[data-char='ragirl'] .character-torso-face.face-back { background-image: url('../images/ragirl_body_back.png'); }
+body[data-char='ragirl'] .character-arm-right {
+    left: calc(134 / 948 * 100%);
+    top: calc(709 / 1340 * 100%);
+    width: calc(138 / 948 * 100%);
+    height: calc(300 / 1340 * 100%);
+    transform-origin: right top;
+}
+body[data-char='ragirl'] .character-arm-right .face-front { background-image: url('../images/ragirl_arm_0_front.png'); }
+body[data-char='ragirl'] .character-arm-right .face-back { background-image: url('../images/ragirl_arm_1_back.png'); }
+body[data-char='ragirl'] .character-arm-left {
+    left: calc(675 / 948 * 100%);
+    top: calc(709 / 1340 * 100%);
+    width: calc(138 / 948 * 100%);
+    height: calc(300 / 1340 * 100%);
+    transform-origin: left top;
+}
+body[data-char='ragirl'] .character-arm-left .face-front { background-image: url('../images/ragirl_arm_1_front.png'); }
+body[data-char='ragirl'] .character-arm-left .face-back { background-image: url('../images/ragirl_arm_0_back.png'); }
+body[data-char='ragirl'] .character-leg-right {
+    left: calc(290 / 948 * 100%);
+    top: calc(1075 / 1340 * 100%);
+    width: calc(186 / 948 * 100%);
+    height: calc(264 / 1340 * 100%);
+    transform-origin: center top;
+}
+body[data-char='ragirl'] .character-leg-right .face-front { background-image: url('../images/ragirl_leg_0.png'); }
+body[data-char='ragirl'] .character-leg-right .face-back { background-image: url('../images/ragirl_leg_1.png'); }
+body[data-char='ragirl'] .character-leg-left {
+    left: calc(474 / 948 * 100%);
+    top: calc(1075 / 1340 * 100%);
+    width: calc(186 / 948 * 100%);
+    height: calc(264 / 1340 * 100%);
+    transform-origin: center top;
+}
+body[data-char='ragirl'] .character-leg-left .face-front { background-image: url('../images/ragirl_leg_1.png'); }
+body[data-char='ragirl'] .character-leg-left .face-back { background-image: url('../images/ragirl_leg_0.png'); }
+
+/* character button */
+.select-character {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    z-index: 100;
+}
+.select-character-btn {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    border: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.select-character-btn-ilbuni {
+    background-image: url('../images/ilbuni_head_front.png');
+    background-size: 36px auto;
+}
+.select-character-btn-ragirl {
+    background-image: url('../images/ragirl_head_front.png');
+    opacity: 0.5;
+}
+body[data-char='ragirl'] .select-character-btn-ilbuni {
+    opacity: 0.5;
+}
+body[data-char='ilbuni'] .select-character-btn-ilbuni,
+body[data-char='ragirl'] .select-character-btn-ragirl {
+    opacity: 1;
 }
