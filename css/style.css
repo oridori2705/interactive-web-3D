@@ -91,3 +91,21 @@ body {
 .wall-front-b{ transform: translateZ(50vw);}
 .wall-front-c{ transform: translateZ(-200vw);}
 .wall-front-d{ transform: translateZ(-500vw);}
+
+
+
+/*프로그레스바*/
+.progress-bar-con{
+    position: fixed;
+    left:0;
+    right:0;
+    z-index: 100;
+    width:100vw;
+    height: 5px;
+    background: #555;
+
+}
+.progress-bar {
+    height: 100%;
+    background: skyblue;
+}
