@@ -33,6 +33,8 @@ body {
     transform-style: preserve-3d;
     width: 100vw;
     height: 100vh;
+    /*화면이 꽉차보이지 않게 zoom-out을 통해 시야가 멀어진다.*/
+    transform: translateZ(-490vw);
 }
 /*벽이 총 6개있다.(컨텐츠 벽4개 오른쪽 왼쪽벽 2개*/
 /*벽을 absoulte로 모두 겹친상태에서 왼쪽 오른쪽벽은 가로폭을 넓힌다. 그리고 y축을 기준으로 rotate를한다.*/
@@ -56,4 +58,29 @@ body {
 /*컨텐츠벽의 텍스트의 속성*/
 .wall-title{
     font-size: 5rem;
+}
+/*왼쪽 벽*/
+.wall-left{
+    /*왼쪽벽을 늘림(양쪽의 긴 벽의 역할을 위해*/
+    width: 1000vw;
+    /*벽이 입체적으로 보이게하기위해*/
+    transform: rotateY(90deg) translateZ(-500vw);
+    /*벽이 rotate를하면 축이 500vw를 기준으로 회전한다.
+    그렇게되면 컨텐츠벽들과 500vw정도가 떨어져있게 된다. -> 이걸 붙여야한다.*/
+    /*--- 이렇게 가로로 늘어져있던 벽이 rotate를 통해 회전하고 
+    우리는 3D공간으로 인해 시야가 뒤로가진 상태이다.
+    그래서 left를 -500vw를 하게되면 내 시야의 기준에 따라서 벽이 왼쪽으로 rotate한것처럼 보이게 된다.*/
+    /*즉 500vw(가운데)를 기준으로 회전했으면 500vw만큼 왼쪽으로 와야 왼쪽벽이된다.
+    left대신 translateZ(-500vw)로도 가능하다.*/
+    /*left:-500vw*/
+}
+/*오른쪽 벽*/
+.wall-right{
+    width: 1000vw;
+    /* left:-500vw; */
+     /*오른쪽벽은 오른쪽으로 위치해야하므로 z축을 100vw만큼(컨텐츠벽 크기)변경해준다.*/
+    /*여기서 왼쪽에서 -100vw인 left:-400vw도 가능하다 근데 하드웨어 가속을 사용하는 translate를 사용하자
+    left대신 trnaslate(-400vw)도 사용가능하다.*/
+    transform: rotateY(90deg) translateZ(-400vw);
+   
 }
