@@ -3,8 +3,7 @@
 
 # 실행과정
 
-
-![3dweb](https://github.com/oridori2705/interactive-web-3D/assets/90139306/ba6f7002-604f-4d4a-933f-3854f569e0ad)
+![3dweb](https://github.com/oridori2705/interactive-web-3D/assets/90139306/b1d0089b-c152-468c-a33a-855ca462c243)
 
 <br>
 
