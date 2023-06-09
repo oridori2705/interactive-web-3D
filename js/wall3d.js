@@ -2,6 +2,7 @@
     const houseElem=document.querySelector(".house")
     const progress=document.querySelector(".progress-bar");
     const stageElem=document.querySelector(".stage");
+    const selectCharacterElem = document.querySelector('.select-character');
     let x=0,y=0;
     /*스크롤 값 퍼센트로 나타내는 방법 */
     /*창이 줄어들었을때 스크롤되는 양이 달라진다. 
@@ -35,7 +36,16 @@
         new Character({
             /*캐릭터의 위치를 마우스의 위치로 설정하기위해 x값을 보내줌(퍼센트로보내주기위해 변환) */
             xPos: e.clientX / window.innerWidth * 100, 
+            /*각 캐릭터마다 고유 걷는속도를 위해 지정 
+            0.5 : 속도를 절반정도로 떨어뜨림(너무빠르면안되니까)
+            0.2 : 최소 속도를 정함(너무 느린애는 없어야함)*/
             speed: Math.random() * 0.5 + 0.2
         });
     });
+    //라면소녀로 캐릭터를 바꾸는 함수
+    selectCharacterElem.addEventListener('click', function (e) {
+        const value = e.target.getAttribute('data-char');//누른 버튼의 속성을 가져온다.
+        document.body.setAttribute('data-char', value);
+    });
+
 })();

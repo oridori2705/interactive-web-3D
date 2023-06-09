@@ -4,6 +4,7 @@ body {
     -webkit-overflow-scrolling: touch;
     color: #555;
     background: #fff000;
+    transition: background .5s;
 }
 /*전체 컨테이너*/
 .world{
@@ -257,7 +258,8 @@ data-direction에 따라서 어디쪽을 바라보고 있는지 CSS로 미리정
 /*라면걸(다른캐릭터)*/
 body[data-char='ragirl'] .character {
     width: 12vw;
-    height: calc(12vw * 1.4135);
+    height: calc(12vw * 1.4135);/*크기같은거 이미지가 애초에 다 다르니까 재조정해줘야함*/
+    /*미리 세팅을 이렇게 해놔야 js에서 할일이 줄어든다.*/
 }
 body[data-char='ragirl'] .character-head {
     left: calc(23 / 948 * 100%);
@@ -313,7 +315,13 @@ body[data-char='ragirl'] .character-leg-left {
 body[data-char='ragirl'] .character-leg-left .face-front { background-image: url('../images/ragirl_leg_1.png'); }
 body[data-char='ragirl'] .character-leg-left .face-back { background-image: url('../images/ragirl_leg_0.png'); }
 
+body[data-char='ragirl'] {
+    background: #ff7200;
+}
+
+
 /* character button */
+/* 캐릭터 선택버튼 */
 .select-character {
     display: flex;
     align-items: center;
@@ -342,9 +350,12 @@ body[data-char='ragirl'] .character-leg-left .face-back { background-image: url(
     background-image: url('../images/ragirl_head_front.png');
     opacity: 0.5;
 }
+
+/* 라면걸이 선택되었을때 일분이버튼 투명도 0.5 */
 body[data-char='ragirl'] .select-character-btn-ilbuni {
     opacity: 0.5;
 }
+/* 일분이 선택되거나 라면걸이 선택되면 투명도 0.1이됨*/
 body[data-char='ilbuni'] .select-character-btn-ilbuni,
 body[data-char='ragirl'] .select-character-btn-ragirl {
     opacity: 1;
