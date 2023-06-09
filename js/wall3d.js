@@ -3,6 +3,11 @@
     const progress=document.querySelector(".progress-bar");
     const stageElem=document.querySelector(".stage");
     const selectCharacterElem = document.querySelector('.select-character');
+    const wBtn=document.querySelector(".select-w-btn");
+    const aBtn=document.querySelector(".select-a-btn");
+    const sBtn=document.querySelector(".select-s-btn");
+    const dBtn=document.querySelector(".select-d-btn");
+    
     let x=0,y=0;
     /*스크롤 값 퍼센트로 나타내는 방법 */
     /*창이 줄어들었을때 스크롤되는 양이 달라진다. 
@@ -33,6 +38,7 @@
     });
     /* stage부분을 클릭하면 캐릭터생성하기*/
     stageElem.addEventListener('click', function (e) {
+        
         new Character({
             /*캐릭터의 위치를 마우스의 위치로 설정하기위해 x값을 보내줌(퍼센트로보내주기위해 변환) */
             xPos: e.clientX / window.innerWidth * 100, 
@@ -46,6 +52,54 @@
     selectCharacterElem.addEventListener('click', function (e) {
         const value = e.target.getAttribute('data-char');//누른 버튼의 속성을 가져온다.
         document.body.setAttribute('data-char', value);
+    });
+
+    window.addEventListener('keydown', (e)=> {
+        /*키를누르면 한 방향으로만 가게됨 그리고 연타 시 계속빨라짐
+        ->키를 누르고있는 동안 keydown이벤트를 막아야함 */
+        
+        
+        //e.keycode는 이제 사용안함 => 아래와같이 e.code로 사용
+        if (e.code =="KeyA" || e.code =="ArrowLeft") {
+            //왼쪽
+            aBtn.style.opacity = 0.5;
+            
+            
+        }else if (e.code =="KeyD" ||e.code =="ArrowRight") {
+            // 오른쪽
+            dBtn.style.opacity = 0.5;
+        }
+        else if (e.code =="KeyW"){
+            wBtn.style.opacity = 0.5;  
+        
+        }
+        else if (e.code =="KeyS") {
+            // 뒤쪽
+            sBtn.style.opacity = 0.5;
+            
+        }
+        
+    });
+      /*키에서 손을 뗐을 때 멈춰야한다. */
+    window.addEventListener('keyup', function (e) {
+        if (e.code =="KeyA" || e.code =="ArrowLeft") {
+            //왼쪽
+            aBtn.style.opacity = 1;
+            
+            
+        }else if (e.code =="KeyD" ||e.code =="ArrowRight") {
+            // 오른쪽
+            dBtn.style.opacity = 1;
+        }
+        else if (e.code =="KeyW"){
+            wBtn.style.opacity = 1;  
+        
+        }
+        else if (e.code =="KeyS") {
+            // 뒤쪽
+            sBtn.style.opacity = 1;
+            
+        }
     });
 
 })();

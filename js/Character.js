@@ -51,6 +51,8 @@ function Character(info){
     // 키다운 이벤트의 중복실행을 없애기위한 좌우 이동 중인지 아닌지
     this.runningState = false;
 
+    //여기에 scrollY를 저장해둬야 캐릭터가 생성되어도 scrollY값은 고정이된다.
+    this.scrollYvalue=window.scrollY;
     /*프로토타입에서 만든 함수 사용 */
     this.init();
 }
@@ -165,12 +167,14 @@ Character.prototype = {
         }
         /*앞뒤(W,A)방향키는 여기서 해주면됨 */
         else if(self.direction =="forward"){
-            let scrollnum=window.scrollY+20;
-            window.scroll(0,scrollnum);
+            /*처음에 let scrollNum=window.scrollY+20을 했었는데 캐릭터가 생성될때마다 속도가 점점커졌다
+            이는 캐릭터생성될때마다 scrollNum값이 누적되어서 그렇다. 그래서 생성자안에 고정값 scrollY를 해주고, 거기에 +20만해주었다. */
+            self.scrollYvalue+=20;
+            window.scroll(0,self.scrollYvalue);
         }
         else if(self.direction =="backward"){
-            let scrollnum=window.scrollY-20;
-            window.scroll(0,scrollnum);
+            self.scrollYvalue-=20;
+            window.scroll(0,self.scrollYvalue);
         }
         /* 캐릭터의 최대 이동공간거리 정해줌*/
         if (self.xPos < 2) {
@@ -196,7 +200,6 @@ Character.prototype = {
             self.run(self);
             
         });
-       
     }
     // bind를 사용한 방법 : requestAnimationFrame의 호출 시 window객체를 가리키는 오류해결방법
     // run: function () {
